@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FastSpring Checkout Components Python Demo</title>
+
+  <script src="https://cdn.onfastspring.com/checkout-sdk/latest/fastspring-sdk.js"></script>
+  <link rel="stylesheet" href="/static/index.css" />
+</head>
+<body>
+  <main class="main-container">
+    <section class="left-panel animated-panel">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <div class="panel-inner">
+        <div class="brand-row">
+          <div class="brand-mark">FS</div>
+          <div>
+            <div class="eyebrow">Python Components Demo</div>
+            <h1>Checkout Components</h1>
+          </div>
+        </div>
+
+        <p class="intro">
+          Enter your details below and click <strong>Load Payment Form</strong> to create
+          a FastSpring session and load the Checkout Components experience on the right.
+        </p>
+
+        <form id="components-form" novalidate>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autocomplete="given-name"
+              placeholder="John"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autocomplete="family-name"
+              placeholder="Doe"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="john@example.com"
+              required
+            />
+          </div>
+
+          <div class="product-card">
+            <div class="product-meta">
+              <span class="product-label">Selected Product</span>
+              <strong>Advanced Monthly</strong>
+            </div>
+            <div class="product-price">Sandbox</div>
+          </div>
+
+          <button id="load-components-btn" type="submit">Load Payment Form</button>
+        </form>
+
+        <div id="status-message" class="status-message" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="right-panel animated-panel">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+
+      <div class="panel-inner">
+        <div id="checkout-shell">
+          <div class="checkout-placeholder" id="checkout-placeholder">
+            <h2>FastSpring Components</h2>
+            <p>
+              When the session is created successfully, the card form, pay button,
+              and disclosures will load here using the FastSpring Checkout Components SDK.
+            </p>
+          </div>
+
+          <div id="spinner" class="spinner hidden" aria-hidden="true"></div>
+
+          <div id="components-wrapper" class="components-wrapper hidden">
+            <div class="component-section">
+              <h3 class="component-heading">Card Details</h3>
+              <div id="card-element"></div>
+            </div>
+
+            <div class="component-section pay-button-wrap">
+              <div id="pay-button-element"></div>
+            </div>
+
+            <div class="component-section disclosures-wrap">
+              <div id="disclosures-element"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/static/components-app.js"></script>
+</body>
+</html>
