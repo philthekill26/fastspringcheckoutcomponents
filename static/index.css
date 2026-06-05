@@ -418,6 +418,64 @@ button:disabled {
   width: 100%;
 }
 
+/* Success screen */
+.success-screen {
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.success-core {
+  max-width: 460px;
+  width: 100%;
+}
+
+.success-badge {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(94, 234, 212, 0.12);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  color: var(--success);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+.success-copy {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.order-reference {
+  margin-top: 22px;
+  color: #dce8ff;
+  font-weight: 700;
+}
+
+.gif-wrap {
+  margin: 24px auto 12px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-gif {
+  display: block;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
 @keyframes spin {
   from { transform: translateX(-50%) rotate(0deg); }
   to { transform: translateX(-50%) rotate(360deg); }
@@ -453,5 +511,9 @@ button:disabled {
 
   .product-price {
     white-space: normal;
+  }
+
+  .success-gif {
+    width: 220px;
   }
 }
