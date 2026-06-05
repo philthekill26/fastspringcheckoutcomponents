@@ -90,7 +90,7 @@
 
       <div class="panel-inner">
         <div id="checkout-shell">
-          <div class="checkout-placeholder" id="checkout-placeholder">
+          <div id="checkout-header" class="checkout-placeholder">
             <h2>FastSpring Components</h2>
             <p>
               When the session is created successfully, the card form, pay button,
@@ -112,6 +112,24 @@
 
             <div class="component-section disclosures-wrap">
               <div id="disclosures-element"></div>
+            </div>
+          </div>
+
+          <div id="success-message" class="success-screen hidden">
+            <div class="success-core">
+              <div class="success-badge">PAYMENT COMPLETE</div>
+              <h2>Thank you for your purchase</h2>
+              <p class="success-copy">Have a nice day.</p>
+
+              <div class="gif-wrap">
+                <img
+                  src="/static/animations/thank-you.gif"
+                  alt="Thank you animation"
+                  class="success-gif"
+                />
+              </div>
+
+              <p id="order-reference" class="order-reference">Reference ID: —</p>
             </div>
           </div>
         </div>
