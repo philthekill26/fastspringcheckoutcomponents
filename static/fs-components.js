@@ -2,6 +2,20 @@ import { sdk } from "./fs-sdk.js";
 
 
 // -----------------------------------------------------------------------------
+// Shared component styling
+// -----------------------------------------------------------------------------
+
+const COMPONENT_FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+const NAVY = "#1D224D";
+const BLUE = "#2563EB";
+const BLUE_HOVER = "#1E4FC0";
+const FOCUS_BLUE = "#4D90FE";
+const INPUT_BORDER = "#cccccc";
+const WHITE = "#ffffff";
+const CHIP_BACKGROUND = "#EBF6FF";
+
+
+// -----------------------------------------------------------------------------
 // Card Component
 // -----------------------------------------------------------------------------
 
@@ -13,27 +27,25 @@ const cardComponent = sdk.components.create("fs-card", {
     state: {
       default: {
         card: {
-          backgroundColor: "transparent",
-          border: "none",
-          boxShadow: "none",
-          padding: "0"
+          backgroundColor: WHITE,
+          borderRadius: "8px",
+          border: `2px solid ${NAVY}`
         },
+
         input: {
-          backgroundColor: "#ffffff",
-          borderColor: "#404040",
-          borderRadius: "10px",
-          boxShadow: "3px 3px 0 #404040",
+          backgroundColor: WHITE,
+          color: NAVY,
+          borderColor: INPUT_BORDER,
+          borderRadius: "6px",
           height: "48px",
-          padding: "0 10px",
-          color: "#1D224D",
           fontSize: "16px",
-          fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
+          fontFamily: COMPONENT_FONT
         }
       },
 
       focus: {
         input: {
-          borderColor: "#4d90fe"
+          borderColor: FOCUS_BLUE
         }
       },
 
@@ -52,46 +64,40 @@ cardComponent.mount("#card-element");
 // -----------------------------------------------------------------------------
 // Coupon Component
 // -----------------------------------------------------------------------------
-//
-// Released component identifier: "fs-coupon"
-//
-// The buyer enters the coupon code directly into the FastSpring component.
-// The seller page does not manually submit or validate coupon codes.
-//
-// FastSpring owns the coupon apply / clear flow through the SDK and session.
-//
-// Mount target in components.html:
-//
-//   <div id="coupon-element"></div>
-//
 
 const couponComponent = sdk.components.create("fs-coupon", {
   style: {
     state: {
       default: {
         input: {
-          background: "#ffffff",
-          borderColor: "#404040",
-          borderRadius: "10px",
-          height: "48px"
+          background: WHITE,
+          color: NAVY,
+          borderColor: NAVY,
+          borderRadius: "6px",
+          height: "48px",
+          fontSize: "16px",
+          fontFamily: COMPONENT_FONT
         },
 
         button: {
-          background: "#2563EB",
-          color: "#ffffff",
-          borderRadius: "10px"
+          background: BLUE,
+          color: WHITE,
+          borderRadius: "6px",
+          fontFamily: COMPONENT_FONT,
+          fontWeight: "700"
         },
 
         chip: {
-          background: "#EBF6FF",
-          color: "#2563EB",
-          borderRadius: "12px"
+          background: CHIP_BACKGROUND,
+          color: NAVY,
+          borderRadius: "12px",
+          fontFamily: COMPONENT_FONT
         }
       },
 
       focus: {
         input: {
-          borderColor: "#4d90fe"
+          borderColor: FOCUS_BLUE
         }
       }
     }
@@ -115,23 +121,20 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
     state: {
       default: {
         button: {
-          backgroundColor: "#2563EB",
-          color: "#ffffff",
-          border: "1px solid #404040",
-          borderRadius: "10px",
-          boxShadow: "4px 4px 0 #404040",
-          width: "100%",
-          maxWidth: "420px",
+          backgroundColor: BLUE,
+          color: WHITE,
+          borderRadius: "8px",
+          width: "400px",
           height: "54px",
           fontSize: "18px",
-          fontWeight: "bold",
-          cursor: "pointer"
+          fontWeight: "700",
+          fontFamily: COMPONENT_FONT
         }
       },
 
       hover: {
         button: {
-          backgroundColor: "#286090"
+          backgroundColor: BLUE_HOVER
         }
       },
 
@@ -139,8 +142,6 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
         button: {
           backgroundColor: "#EBF6FF",
           color: "#8d8d8d",
-          border: "1px solid #8d8d8d",
-          boxShadow: "4px 4px 0 #8d8d8d",
           opacity: "0.8",
           cursor: "not-allowed"
         }
@@ -162,7 +163,7 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
       default: {
         container: {
           color: "#9fb1cb",
-          fontFamily: "Helvetica, Arial, sans-serif",
+          fontFamily: COMPONENT_FONT,
           fontSize: "12px"
         },
 
