@@ -1,5 +1,16 @@
 import { sdk } from "./fs-sdk.js";
 
+/*
+ * Coupon Component PRD note
+ * -------------------------
+ * Draft v0.1 specifies the rendering model as components.create("coupon", ...).
+ * The PRD also lists the proposed identifier as "fsc-coupon" with the prefix TBC.
+ * Keep the type in one constant so it can be changed easily if Engineering ships
+ * a different final SDK identifier.
+ */
+const COUPON_COMPONENT_TYPE = "coupon";
+
+// Card Component
 const cardComponent = sdk.components.create("fs-card", {
   labelMode: "fixed",
   hideCardHeader: false,
@@ -25,21 +36,71 @@ const cardComponent = sdk.components.create("fs-card", {
         }
       },
       focus: {
-        input: {
-          borderColor: "#4d90fe"
-        }
+        input: { borderColor: "#4d90fe" }
       },
       error: {
-        input: {
-          borderColor: "#e53935"
-        }
+        input: { borderColor: "#e53935" }
       }
     }
   }
 });
-
 cardComponent.mount("#card-element");
 
+// Coupon Component
+let couponComponent = null;
+
+try {
+  couponComponent = sdk.components.create(COUPON_COMPONENT_TYPE, {
+    // Expanded intentionally makes the new component obvious in a demo.
+    // The PRD also specifies "collapsed" as a supported presentation.
+    presentation: "expanded",
+    locale: "en",
+
+    // The PRD names the events but does not define the final event payload shape,
+    // so log the raw event rather than relying on undocumented properties.
+    onEvent: (event) => {
+      console.log("FastSpring Coupon Component event:", event);
+
+      const eventType = event?.type || event?.name || event?.event;
+      switch (eventType) {
+        case "component_coupon_apply_clicked":
+          console.log("Coupon apply clicked");
+          break;
+        case "component_coupon_applied":
+          console.log("Coupon successfully applied");
+          break;
+        case "component_coupon_rejected":
+          console.log("Coupon rejected");
+          break;
+        case "component_coupon_cleared":
+          console.log("Coupon removed");
+          break;
+        case "component_coupon_prefilled":
+          console.log("Coupon loaded from session");
+          break;
+        default:
+          if (eventType) console.log(`Coupon event received: ${eventType}`);
+      }
+    }
+  });
+
+  couponComponent.mount("#coupon-element");
+} catch (error) {
+  console.error(`Unable to create FastSpring Coupon Component using type "${COUPON_COMPONENT_TYPE}".`, error);
+
+  const couponElement = document.getElementById("coupon-element");
+  if (couponElement) {
+    couponElement.innerHTML = `
+      <div class="coupon-component-unavailable" role="status">
+        Coupon component is not available in this SDK environment yet.
+        Check the released SDK component identifier and update
+        <code>COUPON_COMPONENT_TYPE</code> in <code>fs-components.js</code>.
+      </div>
+    `;
+  }
+}
+
+// Pay Button Component
 const payButtonComponent = sdk.components.create("fs-pay-button", {
   style: {
     state: {
@@ -59,9 +120,7 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
         }
       },
       hover: {
-        button: {
-          backgroundColor: "#286090"
-        }
+        button: { backgroundColor: "#286090" }
       },
       disabled: {
         button: {
@@ -76,9 +135,9 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
     }
   }
 });
-
 payButtonComponent.mount("#pay-button-element");
 
+// Disclosures Component
 const disclosuresComponent = sdk.components.create("fs-disclosures", {
   style: {
     state: {
@@ -88,14 +147,11 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
           fontFamily: "Helvetica, Arial, sans-serif",
           fontSize: "12px"
         },
-        link: {
-          color: "#2f82ff"
-        }
+        link: { color: "#2f82ff" }
       }
     }
   }
 });
-
 disclosuresComponent.mount("#disclosures-element");
 
-export { sdk };
+export { sdk, cardComponent, couponComponent, payButtonComponent, disclosuresComponent };
