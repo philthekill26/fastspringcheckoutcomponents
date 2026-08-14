@@ -53,109 +53,57 @@ cardComponent.mount("#card-element");
 // Coupon Component
 // -----------------------------------------------------------------------------
 //
-// As-built behaviour:
+// Released component identifier: "fs-coupon"
 //
-// - Component type is "coupon"
-// - Coupon UI is rendered by FastSpring
-// - Buyer enters the coupon code into the component
-// - Component emits an applyCoupon intent
-// - FastSpring SDK handles:
+// The buyer enters the coupon code directly into the FastSpring component.
+// The seller page does not manually submit or validate coupon codes.
 //
-//     POST /sessions/{id}/cart/coupon
+// FastSpring owns the coupon apply / clear flow through the SDK and session.
 //
-//   Apply:
-//     { "code": "100FREE" }
+// Mount target in components.html:
 //
-//   Clear:
-//     { "code": null }
-//
-// - Coupon validation remains entirely with FastSpring
-// - Seller-side JavaScript does NOT manually POST the coupon
-//
-// Important runtime finding:
-// The current SDK creates the Coupon Component successfully but still requires
-// an explicit .mount("#coupon-element") call.
+//   <div id="coupon-element"></div>
 //
 
-let couponComponent = null;
+const couponComponent = sdk.components.create("fs-coupon", {
+  style: {
+    state: {
+      default: {
+        input: {
+          background: "#ffffff",
+          borderColor: "#404040",
+          borderRadius: "10px",
+          height: "48px"
+        },
 
-try {
-  couponComponent = sdk.components.create("coupon", {
-    selector: "#coupon-element",
+        button: {
+          background: "#2563EB",
+          color: "#ffffff",
+          borderRadius: "10px"
+        },
 
-    // Keep expanded for this demo so the buyer can immediately see
-    // the coupon input and Apply button.
-    //
-    // Change to "collapsed" later if you want to demonstrate the
-    // "Have a coupon code?" / "Add Coupon Code" presentation.
-    presentation: "expanded",
+        chip: {
+          background: "#EBF6FF",
+          color: "#2563EB",
+          borderRadius: "12px"
+        }
+      },
 
-    locale: "en",
-
-    onEvent: (event) => {
-      console.log("FastSpring Coupon Component event:", event);
-
-      // Keep event parsing defensive because the final event payload
-      // structure may differ between SDK builds.
-      const eventType =
-        event?.type ||
-        event?.name ||
-        event?.event ||
-        event?.eventType;
-
-      switch (eventType) {
-        case "component_coupon_apply_clicked":
-          console.log("Coupon apply clicked");
-          break;
-
-        case "component_coupon_applied":
-          console.log("Coupon successfully applied");
-          break;
-
-        case "component_coupon_rejected":
-          console.log("Coupon rejected");
-          break;
-
-        case "component_coupon_cleared":
-          console.log("Coupon cleared");
-          break;
-
-        case "component_coupon_prefilled":
-          console.log("Coupon prefilled from session");
-          break;
-
-        default:
-          if (eventType) {
-            console.log(`Coupon event received: ${eventType}`);
-          }
+      focus: {
+        input: {
+          borderColor: "#4d90fe"
+        }
       }
     }
-  });
-
-  couponComponent.mount("#coupon-element");
-
-  console.log(
-    "FastSpring Coupon Component created and mounted:",
-    couponComponent
-  );
-
-} catch (error) {
-  console.error(
-    "Unable to create or mount FastSpring Coupon Component:",
-    error
-  );
-
-  const couponElement = document.getElementById("coupon-element");
-
-  if (couponElement) {
-    couponElement.innerHTML = `
-      <div class="coupon-component-unavailable" role="status">
-        The FastSpring Coupon Component could not be loaded.
-        Check the browser console for the SDK error.
-      </div>
-    `;
   }
-}
+});
+
+couponComponent.mount("#coupon-element");
+
+console.log(
+  "FastSpring Coupon Component created and mounted:",
+  couponComponent
+);
 
 
 // -----------------------------------------------------------------------------
