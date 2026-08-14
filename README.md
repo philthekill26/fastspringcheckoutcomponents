@@ -118,3 +118,20 @@ Health check:
 ```
 
 Store real FastSpring credentials and configuration in Render Environment Variables.
+
+## Component styling
+
+The Card, Coupon and Pay Button now use one shared visual palette so the FastSpring
+iframes/components match the surrounding checkout demo:
+
+- Navy: `#1D224D`
+- Primary blue: `#2563EB`
+- Hover blue: `#1E4FC0`
+- Focus blue: `#4D90FE`
+- White input/component backgrounds
+- 48px Card and Coupon field height
+- Shared Helvetica/Arial font stack
+- Pale-blue applied coupon chip with navy text
+
+The styling is configured in `static/fs-components.js`.
+
