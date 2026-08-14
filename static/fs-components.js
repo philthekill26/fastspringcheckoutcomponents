@@ -1,19 +1,14 @@
 import { sdk } from "./fs-sdk.js";
 
-/*
- * Coupon Component PRD note
- * -------------------------
- * Draft v0.1 specifies the rendering model as components.create("coupon", ...).
- * The PRD also lists the proposed identifier as "fsc-coupon" with the prefix TBC.
- * Keep the type in one constant so it can be changed easily if Engineering ships
- * a different final SDK identifier.
- */
-const COUPON_COMPONENT_TYPE = "coupon";
 
+// -----------------------------------------------------------------------------
 // Card Component
+// -----------------------------------------------------------------------------
+
 const cardComponent = sdk.components.create("fs-card", {
   labelMode: "fixed",
   hideCardHeader: false,
+
   style: {
     state: {
       default: {
@@ -36,71 +31,131 @@ const cardComponent = sdk.components.create("fs-card", {
         }
       },
       focus: {
-        input: { borderColor: "#4d90fe" }
+        input: {
+          borderColor: "#4d90fe"
+        }
       },
       error: {
-        input: { borderColor: "#e53935" }
+        input: {
+          borderColor: "#e53935"
+        }
       }
     }
   }
 });
+
 cardComponent.mount("#card-element");
 
-// Coupon Component
+
+// -----------------------------------------------------------------------------
+// Coupon Component - AS BUILT
+// -----------------------------------------------------------------------------
+//
+// The shipped implementation is an iframe component.
+//
+// IMPORTANT:
+// - The mount selector is supplied directly to components.create().
+// - Do NOT call couponComponent.mount().
+// - The coupon component emits an applyCoupon intent.
+// - The FastSpring SDK owns the backend request:
+//
+//     POST /sessions/{id}/cart/coupon
+//     { "code": "COUPON_CODE" }
+//
+// - Clearing is handled by the SDK with:
+//
+//     { "code": null }
+//
+// - The seller page must not independently validate coupons or manually update
+//   the full session/cart.
+//
+// The as-built technical contract specifies:
+//
+//   fastspring.components.create("coupon", {
+//     selector,
+//     onEvent,
+//     appearance,
+//     locale,
+//     presentation
+//   })
+//
+// The buyer-facing component is referred to as fs-coupon, while the SDK create
+// type in the shipped contract is "coupon".
+//
+
 let couponComponent = null;
 
 try {
-  couponComponent = sdk.components.create(COUPON_COMPONENT_TYPE, {
-    // Expanded intentionally makes the new component obvious in a demo.
-    // The PRD also specifies "collapsed" as a supported presentation.
+  couponComponent = sdk.components.create("coupon", {
+    selector: "#coupon-element",
+
+    // Expanded is intentional for this technical demo so the coupon input is
+    // immediately visible. Change this to "collapsed" to demonstrate the
+    // "Add Coupon Code" / "Have a coupon code?" presentation.
     presentation: "expanded",
+
     locale: "en",
 
-    // The PRD names the events but does not define the final event payload shape,
-    // so log the raw event rather than relying on undocumented properties.
     onEvent: (event) => {
       console.log("FastSpring Coupon Component event:", event);
 
-      const eventType = event?.type || event?.name || event?.event;
+      // Keep this defensive because the final event payload shape may vary.
+      const eventType =
+        event?.type ||
+        event?.name ||
+        event?.event ||
+        event?.eventType;
+
       switch (eventType) {
         case "component_coupon_apply_clicked":
           console.log("Coupon apply clicked");
           break;
+
         case "component_coupon_applied":
           console.log("Coupon successfully applied");
           break;
+
         case "component_coupon_rejected":
           console.log("Coupon rejected");
           break;
+
         case "component_coupon_cleared":
-          console.log("Coupon removed");
+          console.log("Coupon cleared");
           break;
+
         case "component_coupon_prefilled":
-          console.log("Coupon loaded from session");
+          console.log("Coupon prefilled from session");
           break;
+
         default:
-          if (eventType) console.log(`Coupon event received: ${eventType}`);
+          if (eventType) {
+            console.log(`Coupon event received: ${eventType}`);
+          }
       }
     }
   });
 
-  couponComponent.mount("#coupon-element");
+  console.log("FastSpring Coupon Component created:", couponComponent);
 } catch (error) {
-  console.error(`Unable to create FastSpring Coupon Component using type "${COUPON_COMPONENT_TYPE}".`, error);
+  console.error("Unable to create FastSpring Coupon Component.", error);
 
   const couponElement = document.getElementById("coupon-element");
+
   if (couponElement) {
     couponElement.innerHTML = `
       <div class="coupon-component-unavailable" role="status">
-        Coupon component is not available in this SDK environment yet.
-        Check the released SDK component identifier and update
-        <code>COUPON_COMPONENT_TYPE</code> in <code>fs-components.js</code>.
+        The FastSpring Coupon Component could not be created.
+        Check the browser console for the SDK error.
       </div>
     `;
   }
 }
 
+
+// -----------------------------------------------------------------------------
 // Pay Button Component
+// -----------------------------------------------------------------------------
+
 const payButtonComponent = sdk.components.create("fs-pay-button", {
   style: {
     state: {
@@ -120,7 +175,9 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
         }
       },
       hover: {
-        button: { backgroundColor: "#286090" }
+        button: {
+          backgroundColor: "#286090"
+        }
       },
       disabled: {
         button: {
@@ -135,9 +192,14 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
     }
   }
 });
+
 payButtonComponent.mount("#pay-button-element");
 
+
+// -----------------------------------------------------------------------------
 // Disclosures Component
+// -----------------------------------------------------------------------------
+
 const disclosuresComponent = sdk.components.create("fs-disclosures", {
   style: {
     state: {
@@ -147,11 +209,21 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
           fontFamily: "Helvetica, Arial, sans-serif",
           fontSize: "12px"
         },
-        link: { color: "#2f82ff" }
+        link: {
+          color: "#2f82ff"
+        }
       }
     }
   }
 });
+
 disclosuresComponent.mount("#disclosures-element");
 
-export { sdk, cardComponent, couponComponent, payButtonComponent, disclosuresComponent };
+
+export {
+  sdk,
+  cardComponent,
+  couponComponent,
+  payButtonComponent,
+  disclosuresComponent
+};

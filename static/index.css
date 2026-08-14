@@ -61,11 +61,11 @@ body { min-height: 100vh; }
 }
 
 .animated-panel { position: relative; overflow: hidden; }
-.animated-panel span { position: absolute; display: block; z-index: 1; border-radius: 999px; }
-.animated-panel span:nth-child(1) { top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,transparent,rgba(47,130,255,.95),transparent); animation:animateTop 3s linear infinite; }
-.animated-panel span:nth-child(2) { top:0; right:0; width:2px; height:100%; background:linear-gradient(180deg,transparent,rgba(47,130,255,.95),transparent); animation:animateRight 3s linear infinite; animation-delay:.75s; }
-.animated-panel span:nth-child(3) { bottom:0; left:0; width:100%; height:2px; background:linear-gradient(270deg,transparent,rgba(47,130,255,.95),transparent); animation:animateBottom 3s linear infinite; animation-delay:1.5s; }
-.animated-panel span:nth-child(4) { top:0; left:0; width:2px; height:100%; background:linear-gradient(0deg,transparent,rgba(47,130,255,.95),transparent); animation:animateLeft 3s linear infinite; animation-delay:2.25s; }
+.animated-panel > span { position: absolute; display: block; z-index: 1; border-radius: 999px; }
+.animated-panel > span:nth-child(1) { top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,transparent,rgba(47,130,255,.95),transparent); animation:animateTop 3s linear infinite; }
+.animated-panel > span:nth-child(2) { top:0; right:0; width:2px; height:100%; background:linear-gradient(180deg,transparent,rgba(47,130,255,.95),transparent); animation:animateRight 3s linear infinite; animation-delay:.75s; }
+.animated-panel > span:nth-child(3) { bottom:0; left:0; width:100%; height:2px; background:linear-gradient(270deg,transparent,rgba(47,130,255,.95),transparent); animation:animateBottom 3s linear infinite; animation-delay:1.5s; }
+.animated-panel > span:nth-child(4) { top:0; left:0; width:2px; height:100%; background:linear-gradient(0deg,transparent,rgba(47,130,255,.95),transparent); animation:animateLeft 3s linear infinite; animation-delay:2.25s; }
 .animated-panel::after { content:""; position:absolute; inset:0; background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.02) 35%,rgba(255,255,255,.06) 50%,transparent 65%); transform:translateX(-140%) skewX(-18deg); animation:sheen 6s ease-in-out infinite; pointer-events:none; z-index:1; }
 
 @keyframes animateTop { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
@@ -111,10 +111,6 @@ button:disabled { opacity:.6; cursor:not-allowed; }
 .components-wrapper { display:grid; gap:18px; }
 .component-section { border:1px solid var(--border); border-radius:16px; background:rgba(255,255,255,.03); padding:18px; }
 .component-heading { margin:0 0 14px; font-size:1rem; color:#fff; }
-.component-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.component-title-row .component-heading { margin-bottom:0; }
-.component-tag { display:inline-flex; align-items:center; justify-content:center; padding:4px 9px; border-radius:999px; background:rgba(94,234,212,.10); border:1px solid rgba(94,234,212,.30); color:var(--success); font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
-.component-help { margin:8px 0 14px; color:var(--muted); font-size:.86rem; }
 .coupon-section { position:relative; }
 .coupon-component-unavailable { padding:12px 14px; border:1px solid rgba(252,165,165,.28); border-radius:12px; background:rgba(252,165,165,.06); color:#ffd4d4; font-size:.84rem; line-height:1.5; }
 .coupon-component-unavailable code { color:#fff; }
@@ -133,7 +129,7 @@ button:disabled { opacity:.6; cursor:not-allowed; }
 @keyframes spin { from{transform:translateX(-50%) rotate(0deg)} to{transform:translateX(-50%) rotate(360deg)} }
 
 @media (prefers-reduced-motion: reduce) {
-  .animated-panel span, .animated-panel::after, .spinner { animation:none; }
+  .animated-panel > span, .animated-panel::after, .spinner { animation:none; }
 }
 
 @media (max-width:980px) {
