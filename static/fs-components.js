@@ -30,11 +30,13 @@ const cardComponent = sdk.components.create("fs-card", {
           fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif'
         }
       },
+
       focus: {
         input: {
           borderColor: "#4d90fe"
         }
       },
+
       error: {
         input: {
           borderColor: "#e53935"
@@ -48,39 +50,31 @@ cardComponent.mount("#card-element");
 
 
 // -----------------------------------------------------------------------------
-// Coupon Component - AS BUILT
+// Coupon Component
 // -----------------------------------------------------------------------------
 //
-// The shipped implementation is an iframe component.
+// As-built behaviour:
 //
-// IMPORTANT:
-// - The mount selector is supplied directly to components.create().
-// - Do NOT call couponComponent.mount().
-// - The coupon component emits an applyCoupon intent.
-// - The FastSpring SDK owns the backend request:
+// - Component type is "coupon"
+// - Coupon UI is rendered by FastSpring
+// - Buyer enters the coupon code into the component
+// - Component emits an applyCoupon intent
+// - FastSpring SDK handles:
 //
 //     POST /sessions/{id}/cart/coupon
-//     { "code": "COUPON_CODE" }
 //
-// - Clearing is handled by the SDK with:
+//   Apply:
+//     { "code": "100FREE" }
 //
+//   Clear:
 //     { "code": null }
 //
-// - The seller page must not independently validate coupons or manually update
-//   the full session/cart.
+// - Coupon validation remains entirely with FastSpring
+// - Seller-side JavaScript does NOT manually POST the coupon
 //
-// The as-built technical contract specifies:
-//
-//   fastspring.components.create("coupon", {
-//     selector,
-//     onEvent,
-//     appearance,
-//     locale,
-//     presentation
-//   })
-//
-// The buyer-facing component is referred to as fs-coupon, while the SDK create
-// type in the shipped contract is "coupon".
+// Important runtime finding:
+// The current SDK creates the Coupon Component successfully but still requires
+// an explicit .mount("#coupon-element") call.
 //
 
 let couponComponent = null;
@@ -89,9 +83,11 @@ try {
   couponComponent = sdk.components.create("coupon", {
     selector: "#coupon-element",
 
-    // Expanded is intentional for this technical demo so the coupon input is
-    // immediately visible. Change this to "collapsed" to demonstrate the
-    // "Add Coupon Code" / "Have a coupon code?" presentation.
+    // Keep expanded for this demo so the buyer can immediately see
+    // the coupon input and Apply button.
+    //
+    // Change to "collapsed" later if you want to demonstrate the
+    // "Have a coupon code?" / "Add Coupon Code" presentation.
     presentation: "expanded",
 
     locale: "en",
@@ -99,7 +95,8 @@ try {
     onEvent: (event) => {
       console.log("FastSpring Coupon Component event:", event);
 
-      // Keep this defensive because the final event payload shape may vary.
+      // Keep event parsing defensive because the final event payload
+      // structure may differ between SDK builds.
       const eventType =
         event?.type ||
         event?.name ||
@@ -135,16 +132,25 @@ try {
     }
   });
 
-  console.log("FastSpring Coupon Component created:", couponComponent);
+  couponComponent.mount("#coupon-element");
+
+  console.log(
+    "FastSpring Coupon Component created and mounted:",
+    couponComponent
+  );
+
 } catch (error) {
-  console.error("Unable to create FastSpring Coupon Component.", error);
+  console.error(
+    "Unable to create or mount FastSpring Coupon Component:",
+    error
+  );
 
   const couponElement = document.getElementById("coupon-element");
 
   if (couponElement) {
     couponElement.innerHTML = `
       <div class="coupon-component-unavailable" role="status">
-        The FastSpring Coupon Component could not be created.
+        The FastSpring Coupon Component could not be loaded.
         Check the browser console for the SDK error.
       </div>
     `;
@@ -174,11 +180,13 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
           cursor: "pointer"
         }
       },
+
       hover: {
         button: {
           backgroundColor: "#286090"
         }
       },
+
       disabled: {
         button: {
           backgroundColor: "#EBF6FF",
@@ -209,6 +217,7 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
           fontFamily: "Helvetica, Arial, sans-serif",
           fontSize: "12px"
         },
+
         link: {
           color: "#2f82ff"
         }
@@ -219,6 +228,10 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
 
 disclosuresComponent.mount("#disclosures-element");
 
+
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
 
 export {
   sdk,
