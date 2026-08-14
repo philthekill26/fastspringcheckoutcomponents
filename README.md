@@ -1,38 +1,86 @@
-# FastSpring Checkout Components + Coupon Demo
+# FastSpring Checkout Components Python Demo
 
-Standalone FastAPI demo for the FastSpring Checkout Components flow.
+Python/FastAPI demo for FastSpring Checkout Components.
 
-## Included
+## Components included
 
-- Card component
-- Coupon component integration based on **Coupon Component — PRD (Draft v0.1, 2026-04-28)**
-- Pay Button component
-- Disclosures component
-- Existing Python Session API creation flow
-- Post-purchase thank-you screen and local GIF
+- Card
+- Coupon
+- Pay Button
+- Disclosures
+- Post-purchase success screen with local GIF
 
-## Coupon identifier caveat
+## Coupon Component — as-built implementation
 
-The draft PRD's technical rendering model uses:
+The original Coupon Component PRD changed during implementation.
 
-```javascript
-components.create("coupon", { ... })
-```
-
-The same PRD lists `fsc-coupon` as the proposed component identifier and marks the prefix **TBC**.
-For that reason the demo uses one constant in `static/fs-components.js`:
+The shipped component is an iframe component. The seller page creates it with the
+mount selector supplied directly to `components.create()`:
 
 ```javascript
-const COUPON_COMPONENT_TYPE = "coupon";
+sdk.components.create("coupon", {
+  selector: "#coupon-element",
+  presentation: "expanded",
+  locale: "en",
+  onEvent: (event) => {
+    console.log(event);
+  }
+});
 ```
 
-If the released SDK uses a different identifier, only change that constant.
+Do **not** call `.mount()` on the coupon component in this demo.
 
-## Coupon behavior
+### Coupon apply / clear flow
 
-The demo deliberately does **not** implement seller-side coupon validation. Per the PRD, FastSpring's backend/session flow owns validation and the component reads from and writes to the session.
+The seller page does not manually update the session or validate the coupon.
 
-The following PRD coupon events are logged to DevTools when emitted:
+The Coupon Component emits an intent and the FastSpring SDK performs the surgical
+coupon request:
+
+```text
+POST /sessions/{id}/cart/coupon
+```
+
+Apply:
+
+```json
+{
+  "code": "COUPON_CODE"
+}
+```
+
+Clear:
+
+```json
+{
+  "code": null
+}
+```
+
+Missing or empty `code` is ignored and is not treated as a clear.
+
+After the SDK request, FastSpring reloads the session and the coupon iframe reflects
+the updated session state.
+
+### Presentation
+
+This technical demo uses:
+
+```javascript
+presentation: "expanded"
+```
+
+so the input is immediately visible.
+
+To demonstrate the collapsed presentation, change it to:
+
+```javascript
+presentation: "collapsed"
+```
+
+## Coupon telemetry/events
+
+The component specification includes:
 
 - `component_coupon_apply_clicked`
 - `component_coupon_applied`
@@ -40,16 +88,24 @@ The following PRD coupon events are logged to DevTools when emitted:
 - `component_coupon_cleared`
 - `component_coupon_prefilled`
 
-The PRD doesn't define the final event payload shape, so the demo logs the raw event object rather than depending on undocumented fields.
+The demo logs the raw event object to DevTools without assuming a fixed event payload
+shape.
 
-The demo sets `presentation: "expanded"` so the new Coupon Component is immediately visible. Change it to `"collapsed"` to test the alternate PRD presentation.
+## Local setup
 
-## Local run
+Copy `.env.example` to `.env` and populate the local `.env` with real sandbox values.
 
-Copy `.env.example` to `.env` and fill in your real sandbox values locally.
+Do not commit the real `.env`.
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+Run:
+
+```bash
 uvicorn app.main:app --reload
 ```
 
@@ -79,4 +135,4 @@ Health check:
 /health
 ```
 
-Keep real API credentials in Render Environment Variables, never in GitHub.
+Store real FastSpring credentials and configuration in Render Environment Variables.
