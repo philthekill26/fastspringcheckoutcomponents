@@ -1,99 +1,81 @@
 # FastSpring Checkout Components Python Demo
 
-Python/FastAPI demo for FastSpring Checkout Components.
+Standalone Python/FastAPI demo for FastSpring Checkout Components.
 
 ## Components included
 
-- Card
-- Coupon
-- Pay Button
-- Disclosures
+- Card — `fs-card`
+- Coupon — `fs-coupon`
+- Pay Button — `fs-pay-button`
+- Disclosures — `fs-disclosures`
 - Post-purchase success screen with local GIF
 
-## Coupon Component — as-built implementation
+## Coupon Component
 
-The original Coupon Component PRD changed during implementation.
-
-The shipped component is an iframe component. The seller page creates it with the
-mount selector supplied directly to `components.create()`:
+The released Coupon Component identifier is:
 
 ```javascript
-sdk.components.create("coupon", {
-  selector: "#coupon-element",
-  presentation: "expanded",
-  locale: "en",
-  onEvent: (event) => {
-    console.log(event);
+"fs-coupon"
+```
+
+The mount target in `static/components.html` is:
+
+```html
+<div id="coupon-element"></div>
+```
+
+The component is created and mounted in `static/fs-components.js`:
+
+```javascript
+const couponComponent = sdk.components.create("fs-coupon", {
+  style: {
+    state: {
+      default: {
+        input: {
+          background: "#ffffff",
+          borderColor: "#404040",
+          borderRadius: "10px",
+          height: "48px"
+        },
+        button: {
+          background: "#2563EB",
+          color: "#ffffff",
+          borderRadius: "10px"
+        },
+        chip: {
+          background: "#EBF6FF",
+          color: "#2563EB",
+          borderRadius: "12px"
+        }
+      },
+      focus: {
+        input: {
+          borderColor: "#4d90fe"
+        }
+      }
+    }
   }
 });
+
+couponComponent.mount("#coupon-element");
 ```
 
-Do **not** call `.mount()` on the coupon component in this demo.
+The buyer enters the coupon code directly into the FastSpring component. The seller-side
+demo does not manually validate or submit coupon codes.
 
-### Coupon apply / clear flow
+## Disclosures Component
 
-The seller page does not manually update the session or validate the coupon.
+The mount target is:
 
-The Coupon Component emits an intent and the FastSpring SDK performs the surgical
-coupon request:
-
-```text
-POST /sessions/{id}/cart/coupon
+```html
+<div id="disclosures-element"></div>
 ```
 
-Apply:
-
-```json
-{
-  "code": "COUPON_CODE"
-}
-```
-
-Clear:
-
-```json
-{
-  "code": null
-}
-```
-
-Missing or empty `code` is ignored and is not treated as a clear.
-
-After the SDK request, FastSpring reloads the session and the coupon iframe reflects
-the updated session state.
-
-### Presentation
-
-This technical demo uses:
-
-```javascript
-presentation: "expanded"
-```
-
-so the input is immediately visible.
-
-To demonstrate the collapsed presentation, change it to:
-
-```javascript
-presentation: "collapsed"
-```
-
-## Coupon telemetry/events
-
-The component specification includes:
-
-- `component_coupon_apply_clicked`
-- `component_coupon_applied`
-- `component_coupon_rejected`
-- `component_coupon_cleared`
-- `component_coupon_prefilled`
-
-The demo logs the raw event object to DevTools without assuming a fixed event payload
-shape.
+and the demo creates and mounts `fs-disclosures` in `static/fs-components.js`.
 
 ## Local setup
 
-Copy `.env.example` to `.env` and populate the local `.env` with real sandbox values.
+Copy `.env.example` to `.env` and populate `.env` with real sandbox credentials.
 
 Do not commit the real `.env`.
 
