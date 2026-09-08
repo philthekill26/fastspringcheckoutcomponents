@@ -144,3 +144,41 @@ button:disabled { opacity:.6; cursor:not-allowed; }
   .product-price { white-space:normal; }
   .success-gif { width:220px; }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Checkout Components: mounted before sdk.checkout()                         */
+/* -------------------------------------------------------------------------- */
+
+.checkout-locked {
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+#email-element,
+#card-element,
+#coupon-element,
+#pay-button-element,
+#disclosures-element {
+  width: 100%;
+}
+
+#email-element {
+  min-height: 120px;
+}
+
+#card-element {
+  min-height: 320px;
+}
+
+#coupon-element {
+  min-height: 76px;
+}
+
+#pay-button-element {
+  min-height: 58px;
+}
+
+#disclosures-element {
+  min-height: 90px;
+}
+
