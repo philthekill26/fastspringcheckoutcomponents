@@ -46,6 +46,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def home() -> FileResponse:
+    return FileResponse("static/landing.html")
+
+
+@app.get("/checkout")
+def checkout_page() -> FileResponse:
     return FileResponse("static/components.html")
 
 
