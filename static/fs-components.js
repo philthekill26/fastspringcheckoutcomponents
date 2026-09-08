@@ -66,6 +66,8 @@ cardComponent.mount("#card-element");
 // -----------------------------------------------------------------------------
 
 const couponComponent = sdk.components.create("fs-coupon", {
+  presentation: "expanded",
+
   style: {
     state: {
       default: {
