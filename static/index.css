@@ -109,7 +109,6 @@ button:disabled { opacity:.6; cursor:not-allowed; }
 .hidden { display:none !important; }
 
 .components-wrapper { display:grid; gap:18px; }
-.components-pending { visibility:hidden; pointer-events:none; }
 .component-section { border:1px solid var(--border); border-radius:16px; background:rgba(255,255,255,.03); padding:18px; }
 .component-heading { margin:0 0 14px; font-size:1rem; color:#fff; }
 .coupon-section { position:relative; }
