@@ -1,78 +1,100 @@
-# FastSpring Landing Page + Checkout Components Demo
+# FastSpring Checkout Components Python Demo
 
-A complete buyer-journey demo built with FastAPI and FastSpring Checkout Components.
+Standalone Python/FastAPI demo for FastSpring Checkout Components.
 
-## Experience
+## Components included
 
-The application now has two customer-facing stages:
+- Card — `fs-card`
+- Coupon — `fs-coupon`
+- Pay Button — `fs-pay-button`
+- Disclosures — `fs-disclosures`
+- Post-purchase success screen with local GIF
 
-1. `/` — full responsive product landing page for **Advanced Monthly**
-2. `/checkout` — customer details + FastSpring Checkout Components
+## Coupon Component
 
-The product card on the landing page sends the buyer into the checkout flow and
-preserves the selected product name in browser session storage for presentation.
-
-The FastSpring backend product remains controlled server-side with:
-
-```env
-FASTSPRING_PRODUCT_PATH=advanced-monthly
-```
-
-This avoids allowing a browser-provided product path to override the server-side
-checkout configuration.
-
-## FastSpring components
-
-The checkout includes:
-
-- `fs-card`
-- `fs-coupon`
-- `fs-pay-button`
-- `fs-disclosures`
-
-The Coupon Component is explicitly configured with:
+The released Coupon Component identifier is:
 
 ```javascript
-presentation: "expanded"
+"fs-coupon"
 ```
 
-so the coupon field is visible inline on the demo checkout.
+The mount target in `static/components.html` is:
 
-## Visual system
+```html
+<div id="coupon-element"></div>
+```
 
-The landing page and checkout use the same family of:
+The component is created and mounted in `static/fs-components.js`:
 
-- deep navy backgrounds
-- white surfaces for payment inputs
-- FastSpring-style blue actions
-- Helvetica Neue / Helvetica / Arial typography
-- matching rounded corners and focus states
+```javascript
+const couponComponent = sdk.components.create("fs-coupon", {
+  style: {
+    state: {
+      default: {
+        input: {
+          background: "#ffffff",
+          borderColor: "#404040",
+          borderRadius: "10px",
+          height: "48px"
+        },
+        button: {
+          background: "#2563EB",
+          color: "#ffffff",
+          borderRadius: "10px"
+        },
+        chip: {
+          background: "#EBF6FF",
+          color: "#2563EB",
+          borderRadius: "12px"
+        }
+      },
+      focus: {
+        input: {
+          borderColor: "#4d90fe"
+        }
+      }
+    }
+  }
+});
+
+couponComponent.mount("#coupon-element");
+```
+
+The buyer enters the coupon code directly into the FastSpring component. The seller-side
+demo does not manually validate or submit coupon codes.
+
+## Disclosures Component
+
+The mount target is:
+
+```html
+<div id="disclosures-element"></div>
+```
+
+and the demo creates and mounts `fs-disclosures` in `static/fs-components.js`.
 
 ## Local setup
 
-Create a private `.env` file at the project root from `.env.example`.
+Copy `.env.example` to `.env` and populate `.env` with real sandbox credentials.
+
+Do not commit the real `.env`.
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+Run:
+
+```bash
 uvicorn app.main:app --reload
 ```
 
 Open:
 
 ```text
-http://127.0.0.1:8000/
-```
-
-Checkout:
-
-```text
-http://127.0.0.1:8000/checkout
-```
-
-Health:
-
-```text
-http://127.0.0.1:8000/health
+http://127.0.0.1:8000/components
 ```
 
 ## Render
@@ -89,5 +111,10 @@ Start command:
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-Keep all real FastSpring credentials in Render Environment Variables. Do not commit
-a real `.env` file.
+Health check:
+
+```text
+/health
+```
+
+Store real FastSpring credentials and configuration in Render Environment Variables.
