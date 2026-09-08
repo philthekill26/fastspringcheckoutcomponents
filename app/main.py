@@ -46,7 +46,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def home() -> FileResponse:
-    return FileResponse("static/components.html")
+    return FileResponse("static/landing.html")
 
 
 @app.get("/components")
