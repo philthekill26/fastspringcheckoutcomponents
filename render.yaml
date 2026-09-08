@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: fastspring-landing-checkout-components
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      # Set these in the Render dashboard — never commit real credentials.
+      - key: FASTSPRING_USERNAME
+        sync: false
+      - key: FASTSPRING_PASSWORD
+        sync: false
+      - key: FASTSPRING_SESSION_URL
+        sync: false
+      - key: FASTSPRING_STOREFRONT
+        sync: false
+      - key: FASTSPRING_LOCALE
+        value: en
+      - key: FASTSPRING_COUNTRY
+        value: GB
+      - key: FASTSPRING_PRODUCT_PATH
+        value: advanced-monthly
+      - key: FASTSPRING_LIVE
+        value: "false"
