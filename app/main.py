@@ -10,7 +10,7 @@ from pydantic import BaseModel, EmailStr
 
 load_dotenv()
 
-app = FastAPI(title="FastSpring Checkout Components Python Demo")
+app = FastAPI(title="FastSpring Landing Page + Checkout Components Demo")
 
 FASTSPRING_USERNAME = os.getenv("FASTSPRING_USERNAME")
 FASTSPRING_PASSWORD = os.getenv("FASTSPRING_PASSWORD")
@@ -45,7 +45,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
-def home() -> FileResponse:
+def landing_page() -> FileResponse:
+    return FileResponse("static/landing.html")
+
+
+@app.get("/checkout")
+def checkout_page() -> FileResponse:
     return FileResponse("static/components.html")
 
 
@@ -83,7 +88,7 @@ def create_session(form: SessionForm) -> JSONResponse:
         },
         "live": FASTSPRING_LIVE,
         "orderTags": {
-            "Testing": "Checkout Components Demo"
+            "Testing": "Landing Page Checkout Components Demo"
         },
     }
 
