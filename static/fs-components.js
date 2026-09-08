@@ -1,45 +1,57 @@
 import { sdk } from "./fs-sdk.js";
 
+
+// -----------------------------------------------------------------------------
+// Shared component styling
+// -----------------------------------------------------------------------------
+
+const COMPONENT_FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+const NAVY = "#1D224D";
+const BLUE = "#2563EB";
+const BLUE_HOVER = "#1E4FC0";
+const FOCUS_BLUE = "#4D90FE";
+const INPUT_BORDER = "#cccccc";
+const WHITE = "#ffffff";
+const CHIP_BACKGROUND = "#EBF6FF";
+
+
+// -----------------------------------------------------------------------------
+// Card Component
+// -----------------------------------------------------------------------------
+
 const cardComponent = sdk.components.create("fs-card", {
   labelMode: "fixed",
-  hideCardHeader: true,
+  hideCardHeader: false,
+
   style: {
     state: {
       default: {
         card: {
-          backgroundColor: "transparent",
-          border: "none",
-          boxShadow: "none",
-          padding: "0"
+          backgroundColor: WHITE,
+          borderRadius: "8px",
+          border: `2px solid ${NAVY}`
         },
+
         input: {
-          backgroundColor: "#f8fbff",
-          borderColor: "#2a3550",
-          borderRadius: "12px",
-          boxShadow: "none",
-          height: "50px",
-          padding: "0 12px",
-          color: "#1D224D",
+          backgroundColor: WHITE,
+          color: NAVY,
+          borderColor: INPUT_BORDER,
+          borderRadius: "6px",
+          height: "48px",
           fontSize: "16px",
-          fontFamily: '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif'
-        },
-        label: {
-          color: "#dce8ff",
-          fontSize: "14px",
-          fontWeight: "600",
-          fontFamily: '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif'
+          fontFamily: COMPONENT_FONT
         }
       },
+
       focus: {
         input: {
-          borderColor: "#4d90fe",
-          boxShadow: "0 0 0 3px rgba(47,130,255,0.18)"
+          borderColor: FOCUS_BLUE
         }
       },
+
       error: {
         input: {
-          borderColor: "#e53935",
-          boxShadow: "0 0 0 3px rgba(229,57,53,0.14)"
+          borderColor: "#e53935"
         }
       }
     }
@@ -48,37 +60,89 @@ const cardComponent = sdk.components.create("fs-card", {
 
 cardComponent.mount("#card-element");
 
+
+// -----------------------------------------------------------------------------
+// Coupon Component
+// -----------------------------------------------------------------------------
+
+const couponComponent = sdk.components.create("fs-coupon", {
+  style: {
+    state: {
+      default: {
+        input: {
+          background: WHITE,
+          color: NAVY,
+          borderColor: NAVY,
+          borderRadius: "6px",
+          height: "48px",
+          fontSize: "16px",
+          fontFamily: COMPONENT_FONT
+        },
+
+        button: {
+          background: BLUE,
+          color: WHITE,
+          borderRadius: "6px",
+          fontFamily: COMPONENT_FONT,
+          fontWeight: "700"
+        },
+
+        chip: {
+          background: CHIP_BACKGROUND,
+          color: NAVY,
+          borderRadius: "12px",
+          fontFamily: COMPONENT_FONT
+        }
+      },
+
+      focus: {
+        input: {
+          borderColor: FOCUS_BLUE
+        }
+      }
+    }
+  }
+});
+
+couponComponent.mount("#coupon-element");
+
+console.log(
+  "FastSpring Coupon Component created and mounted:",
+  couponComponent
+);
+
+
+// -----------------------------------------------------------------------------
+// Pay Button Component
+// -----------------------------------------------------------------------------
+
 const payButtonComponent = sdk.components.create("fs-pay-button", {
   style: {
     state: {
       default: {
         button: {
-          backgroundColor: "#2563EB",
-          color: "#ffffff",
-          border: "1px solid #1d4ed8",
-          borderRadius: "14px",
-          boxShadow: "0 8px 18px rgba(47, 130, 255, 0.24)",
-          width: "100%",
-          maxWidth: "420px",
-          height: "56px",
+          backgroundColor: BLUE,
+          color: WHITE,
+          borderRadius: "8px",
+          width: "400px",
+          height: "54px",
           fontSize: "18px",
           fontWeight: "700",
-          fontFamily: '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif',
-          cursor: "pointer"
+          fontFamily: COMPONENT_FONT
         }
       },
+
       hover: {
         button: {
-          backgroundColor: "#1d4ed8"
+          backgroundColor: BLUE_HOVER
         }
       },
+
       disabled: {
         button: {
-          backgroundColor: "#24334d",
+          backgroundColor: "#EBF6FF",
           color: "#8d8d8d",
-          border: "1px solid #3a4a68",
-          boxShadow: "none",
-          opacity: "0.9",
+          opacity: "0.8",
           cursor: "not-allowed"
         }
       }
@@ -88,16 +152,21 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
 
 payButtonComponent.mount("#pay-button-element");
 
+
+// -----------------------------------------------------------------------------
+// Disclosures Component
+// -----------------------------------------------------------------------------
+
 const disclosuresComponent = sdk.components.create("fs-disclosures", {
   style: {
     state: {
       default: {
         container: {
           color: "#9fb1cb",
-          fontFamily: 'Inter, "Helvetica Neue", Helvetica, Arial, sans-serif',
-          fontSize: "12px",
-          lineHeight: "1.6"
+          fontFamily: COMPONENT_FONT,
+          fontSize: "12px"
         },
+
         link: {
           color: "#2f82ff"
         }
@@ -108,4 +177,15 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
 
 disclosuresComponent.mount("#disclosures-element");
 
-export { sdk };
+
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
+
+export {
+  sdk,
+  cardComponent,
+  couponComponent,
+  payButtonComponent,
+  disclosuresComponent
+};
