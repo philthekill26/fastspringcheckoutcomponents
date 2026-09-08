@@ -144,3 +144,67 @@ button:disabled { opacity:.6; cursor:not-allowed; }
   .product-price { white-space:normal; }
   .success-gif { width:220px; }
 }
+
+/* -------------------------------------------------------------------------- */
+/* REPLACE the .checkout-locked block at the bottom of static/index.css        */
+/* with this version.                                                          */
+/*                                                                             */
+/* Why: the old rule was                                                       */
+/*     .checkout-locked { opacity: 0.42; pointer-events: none; }               */
+/* applied to #components-wrapper — which is the PARENT of #disclosures-element.*/
+/*                                                                             */
+/* The beta Rules & Compliance doc requires fs-disclosures to be legible with  */
+/* "no opacity or transform that reduces visibility", on the component or any  */
+/* parent. Dimming the whole wrapper dims the disclosure too. The SDK-side     */
+/* enforcement check for this is specced but not shipped yet, so it will not   */
+/* block rendering today — but it is exactly what a pre-launch review looks    */
+/* for, and it is what the check will test for when it does ship.              */
+/*                                                                             */
+/* Fix: dim only the interactive sections, never the disclosures row.          */
+/* -------------------------------------------------------------------------- */
+
+.checkout-locked {
+  pointer-events: none;
+}
+
+.checkout-locked .component-section:not(.disclosures-wrap) {
+  opacity: 0.42;
+}
+
+/* Disclosures stay fully legible at all times. */
+.checkout-locked .disclosures-wrap {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Mount targets                                                               */
+/*                                                                             */
+/* Keep width, but DON'T force a min-height on #email-element. fs-email can    */
+/* render nothing when the session already carries the buyer's email (which    */
+/* yours does — main.py sends customer.billToContact.email). A forced          */
+/* min-height turns that into a permanent empty box.                           */
+/* -------------------------------------------------------------------------- */
+
+#email-element,
+#card-element,
+#coupon-element,
+#pay-button-element,
+#disclosures-element {
+  width: 100%;
+}
+
+#card-element {
+  min-height: 320px;
+}
+
+#coupon-element {
+  min-height: 76px;
+}
+
+#pay-button-element {
+  min-height: 58px;
+}
+
+#disclosures-element {
+  min-height: 90px;
+}

@@ -1,5 +1,25 @@
+// -----------------------------------------------------------------------------
+// The SDK is loaded by the <script> tag in components.html, which sets the
+// global `FastSpring`. If that script is blocked or fails, the raw error is
+// "FastSpring is not defined", which says nothing useful. Fail loudly instead.
+// -----------------------------------------------------------------------------
+
+if (typeof FastSpring === "undefined") {
+  const message =
+    "FastSpring SDK did not load. Check that " +
+    "https://cdn.onfastspring.com/checkout-sdk/latest/fastspring-sdk.js " +
+    "is reachable and not blocked by an ad blocker or CSP.";
+
+  console.error(`[fs] ${message}`);
+  throw new Error(message);
+}
+
 export const sdk = FastSpring.init({
   checkoutUrl: "https://snailtechsandbox.test.onfastspring.com/components-creditcardtest",
+
+  // Set to true while testing to surface the SDK's built-in
+  // success/failure dialogs. Turn off before any real demo.
+  debug: false,
 
   onSessionLoaded: (data) => {
     console.log("FastSpring session loaded:", data);
