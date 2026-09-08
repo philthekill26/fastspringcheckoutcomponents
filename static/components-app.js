@@ -62,7 +62,6 @@ form.addEventListener("submit", async (event) => {
     setStatus("Session created. Loading payment form...", "success");
 
     if (checkoutPlaceholder) checkoutPlaceholder.style.display = "none";
-    if (componentsWrapper) componentsWrapper.classList.remove("hidden");
 
     if (sdk && typeof sdk.checkout === "function") {
       sdk.checkout(data.id, {
