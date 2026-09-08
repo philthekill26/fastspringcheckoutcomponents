@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Any
 
 import requests
@@ -9,6 +10,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr
 
 load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_DIR = BASE_DIR / "static"
 
 app = FastAPI(title="FastSpring Checkout Components Python Demo")
 
@@ -41,22 +45,17 @@ class SessionForm(BaseModel):
     email: EmailStr
 
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 @app.get("/")
 def home() -> FileResponse:
-    return FileResponse("static/landing.html")
-
-
-@app.get("/checkout")
-def checkout_page() -> FileResponse:
-    return FileResponse("static/components.html")
+    return FileResponse(STATIC_DIR / "components.html")
 
 
 @app.get("/components")
 def components_demo() -> FileResponse:
-    return FileResponse("static/components.html")
+    return FileResponse(STATIC_DIR / "components.html")
 
 
 @app.get("/health")
