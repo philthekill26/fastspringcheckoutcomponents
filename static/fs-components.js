@@ -2,50 +2,17 @@ import { sdk } from "./fs-sdk.js";
 
 
 // -----------------------------------------------------------------------------
-// Email Component
+// Shared component styling
 // -----------------------------------------------------------------------------
 
-const emailComponent = sdk.components.create("fs-email", {
-  fields: {
-    email: "auto"
-  },
-  labelMode: "floating",
-  hideEmailHeader: false,
-
-  style: {
-    state: {
-      default: {
-        email: {
-          backgroundColor: "#ffffff",
-          borderRadius: "8px",
-          padding: "16px"
-        },
-
-        emailTitle: {
-          color: "#111111",
-          fontSize: "16px"
-        },
-
-        label: {
-          color: "#333333"
-        },
-
-        input: {
-          borderRadius: "6px",
-          height: "48px"
-        }
-      },
-
-      focus: {
-        input: {
-          borderColor: "#4d90fe"
-        }
-      }
-    }
-  }
-});
-
-emailComponent.mount("#email-element");
+const COMPONENT_FONT = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+const NAVY = "#1D224D";
+const BLUE = "#2563EB";
+const BLUE_HOVER = "#1E4FC0";
+const FOCUS_BLUE = "#4D90FE";
+const INPUT_BORDER = "#cccccc";
+const WHITE = "#ffffff";
+const CHIP_BACKGROUND = "#EBF6FF";
 
 
 // -----------------------------------------------------------------------------
@@ -60,20 +27,31 @@ const cardComponent = sdk.components.create("fs-card", {
     state: {
       default: {
         card: {
-          backgroundColor: "#ffffff",
+          backgroundColor: WHITE,
           borderRadius: "8px",
-          border: "2px solid navy"
+          border: `2px solid ${NAVY}`
         },
 
         input: {
+          backgroundColor: WHITE,
+          color: NAVY,
+          borderColor: INPUT_BORDER,
           borderRadius: "6px",
-          height: "48px"
+          height: "48px",
+          fontSize: "16px",
+          fontFamily: COMPONENT_FONT
         }
       },
 
       focus: {
         input: {
-          borderColor: "#4d90fe"
+          borderColor: FOCUS_BLUE
+        }
+      },
+
+      error: {
+        input: {
+          borderColor: "#e53935"
         }
       }
     }
@@ -88,34 +66,38 @@ cardComponent.mount("#card-element");
 // -----------------------------------------------------------------------------
 
 const couponComponent = sdk.components.create("fs-coupon", {
-  presentation: "expanded",
-
   style: {
     state: {
       default: {
         input: {
-          background: "#ffffff",
-          borderColor: "#cccccc",
+          background: WHITE,
+          color: NAVY,
+          borderColor: NAVY,
           borderRadius: "6px",
-          height: "44px"
+          height: "48px",
+          fontSize: "16px",
+          fontFamily: COMPONENT_FONT
         },
 
         button: {
-          background: "#2563EB",
-          color: "#ffffff",
-          borderRadius: "6px"
+          background: BLUE,
+          color: WHITE,
+          borderRadius: "6px",
+          fontFamily: COMPONENT_FONT,
+          fontWeight: "700"
         },
 
         chip: {
-          background: "#EBF6FF",
-          color: "#1D224D",
-          borderRadius: "12px"
+          background: CHIP_BACKGROUND,
+          color: NAVY,
+          borderRadius: "12px",
+          fontFamily: COMPONENT_FONT
         }
       },
 
       focus: {
         input: {
-          borderColor: "#4d90fe"
+          borderColor: FOCUS_BLUE
         }
       }
     }
@@ -123,6 +105,11 @@ const couponComponent = sdk.components.create("fs-coupon", {
 });
 
 couponComponent.mount("#coupon-element");
+
+console.log(
+  "FastSpring Coupon Component created and mounted:",
+  couponComponent
+);
 
 
 // -----------------------------------------------------------------------------
@@ -134,17 +121,29 @@ const payButtonComponent = sdk.components.create("fs-pay-button", {
     state: {
       default: {
         button: {
-          backgroundColor: "#2563EB",
-          color: "#ffffff",
+          backgroundColor: BLUE,
+          color: WHITE,
           borderRadius: "8px",
           width: "400px",
-          height: "54px"
+          height: "54px",
+          fontSize: "18px",
+          fontWeight: "700",
+          fontFamily: COMPONENT_FONT
         }
       },
 
       hover: {
         button: {
-          backgroundColor: "#1E4FC0"
+          backgroundColor: BLUE_HOVER
+        }
+      },
+
+      disabled: {
+        button: {
+          backgroundColor: "#EBF6FF",
+          color: "#8d8d8d",
+          opacity: "0.8",
+          cursor: "not-allowed"
         }
       }
     }
@@ -164,7 +163,7 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
       default: {
         container: {
           color: "#9fb1cb",
-          fontFamily: "Helvetica",
+          fontFamily: COMPONENT_FONT,
           fontSize: "12px"
         },
 
@@ -179,18 +178,12 @@ const disclosuresComponent = sdk.components.create("fs-disclosures", {
 disclosuresComponent.mount("#disclosures-element");
 
 
-console.log("FastSpring components created and mounted.", {
-  emailComponent,
-  cardComponent,
-  couponComponent,
-  payButtonComponent,
-  disclosuresComponent
-});
-
+// -----------------------------------------------------------------------------
+// Exports
+// -----------------------------------------------------------------------------
 
 export {
   sdk,
-  emailComponent,
   cardComponent,
   couponComponent,
   payButtonComponent,

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FastSpring Checkout Components Demo</title>
+  <title>FastSpring Checkout Components Python Demo</title>
 
   <script src="https://cdn.onfastspring.com/checkout-sdk/latest/fastspring-sdk.js"></script>
   <link rel="stylesheet" href="/static/index.css" />
@@ -26,9 +26,8 @@
         </div>
 
         <p class="intro">
-          Enter your details below and click <strong>Load Payment Form</strong>
-          to create a FastSpring session and activate the Checkout Components
-          on the right.
+          Enter your details below and click <strong>Load Payment Form</strong> to create
+          a FastSpring session and load the Checkout Components experience on the right.
         </p>
 
         <form id="components-form" novalidate>
@@ -94,25 +93,14 @@
           <div id="checkout-header" class="checkout-placeholder">
             <h2>FastSpring Components</h2>
             <p>
-              The components are mounted below now and will activate when the
-              FastSpring session loads.
+              The card form, coupon component, pay button and disclosures will load
+              here after the FastSpring session is created.
             </p>
           </div>
 
           <div id="spinner" class="spinner hidden" aria-hidden="true"></div>
 
-          <!--
-            IMPORTANT:
-            This wrapper is intentionally NOT display:none.
-            FastSpring iframe components are created and mounted before
-            sdk.checkout(sessionId), matching the documented SDK pattern.
-          -->
-          <div id="components-wrapper" class="components-wrapper checkout-locked">
-            <div class="component-section">
-              <h3 class="component-heading">Email</h3>
-              <div id="email-element"></div>
-            </div>
-
+          <div id="components-wrapper" class="components-wrapper hidden">
             <div class="component-section">
               <h3 class="component-heading">Card Details</h3>
               <div id="card-element"></div>
