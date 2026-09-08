@@ -49,6 +49,11 @@ def home() -> FileResponse:
     return FileResponse("static/landing.html")
 
 
+@app.get("/checkout")
+def checkout_page() -> FileResponse:
+    return FileResponse("static/components.html")
+
+
 @app.get("/components")
 def components_demo() -> FileResponse:
     return FileResponse("static/components.html")
