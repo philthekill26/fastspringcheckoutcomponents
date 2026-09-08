@@ -3,31 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Secure checkout for Advanced Monthly." />
-  <title>Checkout | Advanced Monthly</title>
+  <title>FastSpring Checkout Components Python Demo</title>
 
   <script src="https://cdn.onfastspring.com/checkout-sdk/latest/fastspring-sdk.js"></script>
   <link rel="stylesheet" href="/static/index.css" />
 </head>
-
 <body>
-  <header class="checkout-topbar">
-    <div class="checkout-topbar-inner">
-      <a class="checkout-brand" href="/" aria-label="Back to Advanced Monthly">
-        <span class="checkout-brand-mark">A</span>
-        <span>
-          <strong>Advanced</strong>
-          <small>Secure checkout</small>
-        </span>
-      </a>
-
-      <div class="secure-label">
-        <span aria-hidden="true">●</span>
-        Secure FastSpring checkout
-      </div>
-    </div>
-  </header>
-
   <main class="main-container">
     <section class="left-panel animated-panel">
       <span></span>
@@ -36,24 +17,22 @@
       <span></span>
 
       <div class="panel-inner">
-        <a class="back-link" href="/">← Back to product</a>
-
         <div class="brand-row">
-          <div class="brand-mark">A</div>
+          <div class="brand-mark">FS</div>
           <div>
-            <div class="eyebrow">Advanced Monthly</div>
-            <h1>Complete your order</h1>
+            <div class="eyebrow">Python Components Demo</div>
+            <h1>Checkout Components</h1>
           </div>
         </div>
 
         <p class="intro">
-          Enter your details below. We will create your secure FastSpring session
-          and load the payment form beside your order.
+          Enter your details below and click <strong>Load Payment Form</strong> to create
+          a FastSpring session and load the Checkout Components experience on the right.
         </p>
 
         <form id="components-form" novalidate>
           <div class="form-group">
-            <label for="firstName">First name</label>
+            <label for="firstName">First Name</label>
             <input
               id="firstName"
               name="firstName"
@@ -65,7 +44,7 @@
           </div>
 
           <div class="form-group">
-            <label for="lastName">Last name</label>
+            <label for="lastName">Last Name</label>
             <input
               id="lastName"
               name="lastName"
@@ -77,7 +56,7 @@
           </div>
 
           <div class="form-group">
-            <label for="email">Email address</label>
+            <label for="email">Email Address</label>
             <input
               id="email"
               name="email"
@@ -90,16 +69,13 @@
 
           <div class="product-card">
             <div class="product-meta">
-              <span class="product-label">Selected product</span>
-              <strong id="selected-product-name">Advanced Monthly</strong>
-              <small class="product-note">Monthly subscription</small>
+              <span class="product-label">Selected Product</span>
+              <strong>Advanced Monthly</strong>
             </div>
             <div class="product-price">Sandbox</div>
           </div>
 
-          <button id="load-components-btn" type="submit">
-            Continue to secure payment
-          </button>
+          <button id="load-components-btn" type="submit">Load Payment Form</button>
         </form>
 
         <div id="status-message" class="status-message" aria-live="polite"></div>
@@ -115,21 +91,18 @@
       <div class="panel-inner">
         <div id="checkout-shell">
           <div id="checkout-header" class="checkout-placeholder">
-            <div class="checkout-placeholder-icon" aria-hidden="true">→</div>
-            <div>
-              <h2>Secure payment</h2>
-              <p>
-                Your card details, coupon field, payment button and FastSpring
-                disclosures will appear here after your session is created.
-              </p>
-            </div>
+            <h2>FastSpring Components</h2>
+            <p>
+              The card form, coupon component, pay button and disclosures will load
+              here after the FastSpring session is created.
+            </p>
           </div>
 
           <div id="spinner" class="spinner hidden" aria-hidden="true"></div>
 
           <div id="components-wrapper" class="components-wrapper hidden">
             <div class="component-section">
-              <h3 class="component-heading">Card details</h3>
+              <h3 class="component-heading">Card Details</h3>
               <div id="card-element"></div>
             </div>
 
@@ -151,7 +124,7 @@
             <div class="success-core">
               <div class="success-badge">PAYMENT COMPLETE</div>
               <h2>Thank you for your purchase</h2>
-              <p class="success-copy">Your Advanced Monthly order is complete.</p>
+              <p class="success-copy">Have a nice day.</p>
 
               <div class="gif-wrap">
                 <img
@@ -162,7 +135,6 @@
               </div>
 
               <p id="order-reference" class="order-reference">Reference ID: —</p>
-              <a class="return-home-button" href="/">Return to product page</a>
             </div>
           </div>
         </div>
