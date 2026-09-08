@@ -93,17 +93,22 @@
           <div id="checkout-header" class="checkout-placeholder">
             <h2>FastSpring Components</h2>
             <p>
-              The card form, pay button and disclosures will load
+              The card form, coupon component, pay button and disclosures will load
               here after the FastSpring session is created.
             </p>
           </div>
 
           <div id="spinner" class="spinner hidden" aria-hidden="true"></div>
 
-          <div id="components-wrapper" class="components-wrapper">
+          <div id="components-wrapper" class="components-wrapper components-pending">
             <div class="component-section">
               <h3 class="component-heading">Card Details</h3>
               <div id="card-element"></div>
+            </div>
+
+            <div class="component-section coupon-section">
+              <h3 class="component-heading">Coupon</h3>
+              <div id="coupon-element"></div>
             </div>
 
             <div class="component-section pay-button-wrap">
