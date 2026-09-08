@@ -1,120 +1,52 @@
-# FastSpring Checkout Components Python Demo
+# FastSpring Landing Page + Checkout Components — Final Retest Build
 
-Standalone Python/FastAPI demo for FastSpring Checkout Components.
+This build keeps the landing page and uses the documented FastSpring Checkout
+Components sequence:
 
-## Components included
+1. Load `fastspring-sdk.js`
+2. `FastSpring.init(...)`
+3. Create each Checkout Component
+4. Mount each component
+5. Create the FastSpring Session
+6. Call `sdk.checkout(sessionId)`
 
-- Card — `fs-card`
-- Coupon — `fs-coupon`
-- Pay Button — `fs-pay-button`
-- Disclosures — `fs-disclosures`
-- Post-purchase success screen with local GIF
+## Included components
 
-## Coupon Component
+- `fs-email`
+- `fs-card`
+- `fs-coupon`
+- `fs-pay-button`
+- `fs-disclosures`
 
-The released Coupon Component identifier is:
-
-```javascript
-"fs-coupon"
-```
-
-The mount target in `static/components.html` is:
-
-```html
-<div id="coupon-element"></div>
-```
-
-The component is created and mounted in `static/fs-components.js`:
+The Coupon Component uses:
 
 ```javascript
-const couponComponent = sdk.components.create("fs-coupon", {
-  style: {
-    state: {
-      default: {
-        input: {
-          background: "#ffffff",
-          borderColor: "#404040",
-          borderRadius: "10px",
-          height: "48px"
-        },
-        button: {
-          background: "#2563EB",
-          color: "#ffffff",
-          borderRadius: "10px"
-        },
-        chip: {
-          background: "#EBF6FF",
-          color: "#2563EB",
-          borderRadius: "12px"
-        }
-      },
-      focus: {
-        input: {
-          borderColor: "#4d90fe"
-        }
-      }
-    }
-  }
-});
-
-couponComponent.mount("#coupon-element");
+presentation: "expanded"
 ```
 
-The buyer enters the coupon code directly into the FastSpring component. The seller-side
-demo does not manually validate or submit coupon codes.
+so its input is visible inline.
 
-## Disclosures Component
+## Important implementation detail
 
-The mount target is:
+The component wrapper is never `display:none` before mounting. It is only visually
+dimmed and has pointer events disabled until `sdk.checkout()` reports success.
 
-```html
-<div id="disclosures-element"></div>
-```
+That means the iframe-based mount targets retain real dimensions while FastSpring
+initializes them.
 
-and the demo creates and mounts `fs-disclosures` in `static/fs-components.js`.
+## Routes
 
-## Local setup
+- `/` — landing page
+- `/checkout` — checkout
+- `/components` — checkout
+- `/health` — health check
 
-Copy `.env.example` to `.env` and populate `.env` with real sandbox credentials.
-
-Do not commit the real `.env`.
-
-Install dependencies:
+## Local run
 
 ```bash
 pip install -r requirements.txt
-```
-
-Run:
-
-```bash
 uvicorn app.main:app --reload
 ```
 
-Open:
-
-```text
-http://127.0.0.1:8000/components
-```
-
-## Render
-
-Build command:
-
-```bash
-pip install -r requirements.txt
-```
-
-Start command:
-
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
-Health check:
-
-```text
-/health
-```
-
-Store real FastSpring credentials and configuration in Render Environment Variables.
+Real FastSpring credentials stay in `.env` locally and Render environment variables
+in production. Do not commit the real `.env`.
