@@ -67,7 +67,7 @@ form.addEventListener("submit", async (event) => {
       sdk.checkout(data.id, {
         onSuccess: () => {
           console.log("FastSpring Components session loaded successfully.");
-          setStatus("Payment form loaded. Apply a coupon if required, then complete payment on the right.", "success");
+          setStatus("Payment form loaded. Complete payment on the right.", "success");
         },
         onError: (error) => {
           console.error("FastSpring Components checkout load failed:", error);
