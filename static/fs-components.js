@@ -112,6 +112,59 @@ console.log(
 );
 
 
+
+
+// -----------------------------------------------------------------------------
+// Apple Pay Component
+// -----------------------------------------------------------------------------
+
+const applePayComponent = sdk.components.create("fs-apple-pay", {
+  variant: "black",
+  frame: {
+    width: "100%",
+    maxWidth: "680px"
+  },
+  style: {
+    state: {
+      default: {
+        button: {
+          // Apple controls the button colours; use `variant` above.
+          height: "48px",
+          borderRadius: "4px"
+        }
+      }
+    }
+  }
+});
+
+applePayComponent.mount("#apple-pay-element");
+
+
+// -----------------------------------------------------------------------------
+// Google Pay Component
+// -----------------------------------------------------------------------------
+
+const googlePayComponent = sdk.components.create("fs-google-pay", {
+  variant: "black",
+  frame: {
+    width: "100%",
+    maxWidth: "680px"
+  },
+  style: {
+    state: {
+      default: {
+        button: {
+          height: "48px",
+          borderRadius: "8px"
+        }
+      }
+    }
+  }
+});
+
+googlePayComponent.mount("#google-pay-element");
+
+
 // -----------------------------------------------------------------------------
 // Pay Button Component
 // -----------------------------------------------------------------------------
@@ -186,6 +239,8 @@ export {
   sdk,
   cardComponent,
   couponComponent,
+  applePayComponent,
+  googlePayComponent,
   payButtonComponent,
   disclosuresComponent
 };
