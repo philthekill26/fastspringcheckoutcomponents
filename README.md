@@ -6,6 +6,8 @@ Standalone Python/FastAPI demo for FastSpring Checkout Components.
 
 - Card — `fs-card`
 - Coupon — `fs-coupon`
+- Apple Pay — `fs-apple-pay`
+- Google Pay — `fs-google-pay`
 - Pay Button — `fs-pay-button`
 - Disclosures — `fs-disclosures`
 - Post-purchase success screen with local GIF
@@ -72,6 +74,25 @@ The mount target is:
 ```
 
 and the demo creates and mounts `fs-disclosures` in `static/fs-components.js`.
+
+
+## Apple Pay and Google Pay Components
+
+The checkout now mounts both FastSpring wallet components:
+
+```html
+<div id="apple-pay-element"></div>
+<div id="google-pay-element"></div>
+```
+
+Apple Pay uses `fs-apple-pay` with the black variant, a responsive 100% frame
+up to 680px, a 48px button height and 4px radius.
+
+Google Pay uses `fs-google-pay` with the black variant, a responsive 100% frame
+up to 680px, a 48px button height and 8px radius.
+
+Wallet visibility is controlled by FastSpring and the wallet provider. A wallet
+may remain hidden when the browser, device, buyer or store/session is not eligible.
 
 ## Local setup
 
