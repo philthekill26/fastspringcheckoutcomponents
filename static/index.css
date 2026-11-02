@@ -114,9 +114,30 @@ button:disabled { opacity:.6; cursor:not-allowed; }
 .coupon-section { position:relative; }
 .coupon-component-unavailable { padding:12px 14px; border:1px solid rgba(252,165,165,.28); border-radius:12px; background:rgba(252,165,165,.06); color:#ffd4d4; font-size:.84rem; line-height:1.5; }
 .coupon-component-unavailable code { color:#fff; }
+.wallets-section { position:relative; }
+.component-helper {
+  margin:-4px 0 14px;
+  color:var(--muted);
+  font-size:.82rem;
+  line-height:1.5;
+}
+.wallets-grid {
+  width:100%;
+  max-width:680px;
+  margin:0 auto;
+  display:grid;
+  gap:12px;
+}
 .pay-button-wrap { display:flex; justify-content:center; align-items:center; }
 .disclosures-wrap { color:var(--muted); font-size:12px; }
-#card-element,#coupon-element,#pay-button-element,#disclosures-element { width:100%; }
+#card-element,
+#coupon-element,
+#apple-pay-element,
+#google-pay-element,
+#pay-button-element,
+#disclosures-element {
+  width:100%;
+}
 
 .success-screen { min-height:520px; display:flex; align-items:center; justify-content:center; text-align:center; padding:30px 20px; }
 .success-core { max-width:460px; width:100%; }
